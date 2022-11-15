@@ -72,13 +72,7 @@ public class MasterMindBase {
 	stratégie : utilise la fonction plusGrandIndice
     */
     public static boolean estPresent(char[] t, char c){
-        int pgi = plusGrandIndice(t, c);
-        if(pgi > -1){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return plusGrandIndice(t, c) > -1;
     }
 
     //______________________________________________
@@ -89,7 +83,14 @@ public class MasterMindBase {
 	stratégie : utilise la fonction plusGrandIndice
     */
     public static boolean elemDiff(char[] t){
- 
+        for(int n = 0; n < t.length; n++){
+            char a = t[n];
+            if(plusGrandIndice(t, a) != n){
+                System.out.println("doublon : " + a + " aux indices " + n + " et " + plusGrandIndice(t, a));
+                return false;
+            }
+        }
+        return true;
     }
     
     //______________________________________________
@@ -132,8 +133,13 @@ public class MasterMindBase {
 	résultat : un tableau de lgCode entiers choisis aléatoirement entre 0 et nbCouleurs-1
     */
     public static int[] codeAleat(int lgCode, int nbCouleurs){
-	
-    }      
+    double rdm = Math.random() * nbCouleurs;
+    int[] res = new int[lgCode];
+    for(int n = 0; n < res.length; n++){
+        res[n] = (int)rdm;
+    }
+    return res;
+    }
 
     //____________________________________________________________
     
@@ -142,7 +148,7 @@ public class MasterMindBase {
 	résultat : vrai ssi codMot est correct, c'est-à-dire de longueur lgCode et ne contenant que des éléments de tabCouleurs
     */
     public static boolean codeCorrect(String codMot, int lgCode, char[] tabCouleurs){
-  
+        
     }
    
     //____________________________________________________________
