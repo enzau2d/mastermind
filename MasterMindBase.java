@@ -106,20 +106,6 @@ public class MasterMindBase {
             }
         }
         return true;
-        /*
-        if(t1.length == t2.length){
-            for(int n = 0 ; n < t1.length; n++){
-                System.out.println(n);
-                if(t1[n] != t2[n]){
-                    return false;
-                }
-            }
-            return true;
-        }
-        else{
-            return false;
-        }
-        */
     }
 
     //______________________________________________
@@ -148,7 +134,26 @@ public class MasterMindBase {
 	résultat : vrai ssi codMot est correct, c'est-à-dire de longueur lgCode et ne contenant que des éléments de tabCouleurs
     */
     public static boolean codeCorrect(String codMot, int lgCode, char[] tabCouleurs){
-        
+        if(codMot.length() == lgCode){
+            boolean res = true;
+            for(int n = 0; n < codMot.length(); n++){
+                char a = codMot.charAt(n);
+                if(!estPresent(tabCouleurs, a)){
+                    res = false;
+                }
+            }
+            if(res){
+                return true;
+            }
+            else{
+                System.out.println("codMot ne contient pas que des éléments de tabcouleurs");
+                return false;
+            }
+            }
+        else{
+            System.out.println("codMot n'est pas de taille lgCode");
+            return false;
+        }
     }
    
     //____________________________________________________________
@@ -157,7 +162,12 @@ public class MasterMindBase {
 	résultat : le code codMot sous forme de tableau d'entiers en remplaçant chaque couleur par son indice dans tabCouleurs
     */
     public static int[] motVersEntiers(String codMot, char[] tabCouleurs){
- 
+        int[] res = new int[codMot.length()];
+        for(int n = 0; n < codMot.length(); n++){
+            char a = codMot.charAt(n);
+            res[n] = plusGrandIndice(tabCouleurs, a);
+        }
+        return res;
     }
 
     //____________________________________________________________
@@ -168,7 +178,8 @@ public class MasterMindBase {
 	résultat : le code saisi sous forme de tableau d'entiers
     */
     public static int[] propositionCodeHumain(int nbCoups, int lgCode, char[] tabCouleurs){
-   
+        Scanner scan = new Scanner(System.in);
+        //je croies que c'est pas nécessaire
     }
 
     //____________________________________________________________
@@ -178,9 +189,14 @@ public class MasterMindBase {
 	Par exemple, si cod1 = (1,0,2,0) et cod2 = (0,1,0,0) la fonction retourne 1 (le "0" à l'indice 3)
     */
     public static int nbBienPlaces(int[] cod1,int[] cod2){
-
+        int res = 0;
+        for(int n = 0; n < cod1.length; n++){
+            if(cod1[n] == cod2[n]){
+                res = res + 1;
+            }
+        }
+        return res;
     }
-
     //____________________________________________________________
     
     /** pré-requis : les éléments de cod sont des entiers de 0 à nbCouleurs-1
@@ -188,7 +204,11 @@ public class MasterMindBase {
 	Par exemple, si cod = (1,0,2,0) et nbCouleurs = 6 la fonction retourne (2,1,1,0,0,0)
     */
     public static int[] tabFrequence(int[] cod, int nbCouleurs){
-  
+        int[] res = new int[nbCouleurs];
+        for(int n = 0; n < cod.length; n++){
+            res[cod[n]] = res[cod[n]] + 1;
+        }
+        return res;
     }
 
     //____________________________________________________________
@@ -198,7 +218,18 @@ public class MasterMindBase {
 	Par exemple, si cod1 = (1,0,2,0) et cod2 = (0,1,0,0) la fonction retourne 3 (2 "0" et 1 "1")
     */
     public static int nbCommuns(int[] cod1,int[] cod2, int nbCouleurs){
-
+        int[] tab1 = tabFrequence(cod1, nbCouleurs);
+        int[] tab2 = tabFrequence(cod2, nbCouleurs);
+        int res = 0;
+        for(int n = 0; n < cod1.length; n++){
+            if(tab1[n] <= tab2[n]){
+                res = res + tab1[n];
+            }
+            else{
+                res = res + tab2[n];
+            }
+        }
+        return res;
     }
 
     //____________________________________________________________
@@ -210,7 +241,10 @@ public class MasterMindBase {
 	et 2 mal placés (1 "0" et 1 "1")
     */
     public static int[] nbBienMalPlaces(int[] cod1,int[] cod2, int nbCouleurs){
-
+        int[] res = new int[2];
+        res[0] = nbBienPlaces(cod1, cod2);
+        res[1] = nbCommuns(cod1, cod2, nbCouleurs) - res[0];
+        return res;
     }
 
     //____________________________________________________________
@@ -241,7 +275,7 @@ public class MasterMindBase {
 	résultat : le code cod sous forme de mot d'après le tableau tabCouleurs
     */
     public static String entiersVersMot(int[] cod, char[] tabCouleurs){
- 
+        
     }
 
     //___________________________________________________________________
@@ -252,7 +286,12 @@ public class MasterMindBase {
 	résultat : vrai ssi rep est correct, c'est-à-dire rep[0] et rep[1] sont >= 0 et leur somme est <= lgCode
     */
     public static boolean repCorrecte(int[] rep, int lgCode){
-
+        if(rep.length == 2){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     //___________________________________________________________________
@@ -357,7 +396,7 @@ public class MasterMindBase {
 	résultat : le tableau des initiales des noms de couleurs saisis
     */
     public static char[] saisirCouleurs(){
-  
+        
     }
 
     //___________________________________________________________________
@@ -383,3 +422,5 @@ public class MasterMindBase {
     //___________________________________________________________________
     
 } // fin MasterMindBase
+
+
