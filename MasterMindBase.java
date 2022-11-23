@@ -118,7 +118,6 @@ public class MasterMindBase {
 	résultat : un tableau de lgCode entiers choisis aléatoirement entre 0 et nbCouleurs-1
     */
     public static int[] codeAleat(int lgCode, int nbCouleurs){
-
     int[] res = new int[lgCode];
     for(int n = 0; n < res.length; n++){
         res[n] = (int)(Math.random() * nbCouleurs);
@@ -309,7 +308,21 @@ public class MasterMindBase {
 	résultat : les réponses du joueur humain dans un tableau à 2 entiers
     */
     public static int[] reponseHumain(int lgCode){
- 
+        int[] rep = new int[2];
+        try (Scanner scan = new Scanner(System.in)) {
+            System.out.println("Entrez le nombre de corrects et bien placés");
+            rep[0] = scan.nextInt();
+            System.out.println("Entrez le nombre de corrects et mal placés");
+            rep[1] = scan.nextInt();
+            while(!repCorrecte(rep, lgCode)){
+                System.out.println("Les nombres entrés ne sont pas corrects");
+                System.out.println("Entrez le nombre de corrects et bien placés");
+                rep[0] = scan.nextInt();
+                System.out.println("Entrez le nombre de corrects et mal placés");
+                rep[1] = scan.nextInt();
+            }
+        }
+        return rep;
     }
 
     //___________________________________________________________________
@@ -317,26 +330,26 @@ public class MasterMindBase {
      /**CHANGE : action si le code suivant n'existe pas
      *************************************************
         pré-requis : les éléments de cod1 sont des entiers de 0 à nbCouleurs-1
-	action/résultat : met dans cod1 le code qui le suit selon l'ordre lexicographique (dans l'ensemble
-    des codes à valeurs  de 0 à nbCouleurs-1) et retourne vrai si ce code existe,
+	action/résultat : met dans cod1 le code qui le suit selon l'ordre lexicographique (dans l'ensemble des codes à valeurs  de 0 à nbCouleurs-1) et retourne vrai si ce code existe,
      sinon met dans cod1 le code ne contenant que des "0" et retourne faux
     */
     public static boolean passeCodeSuivantLexico(int[] cod1, int  nbCouleurs){
-
+        a
     }
 
     //___________________________________________________________________
 
      /**CHANGE : ajout du paramètre cod1 et modification des spécifications 
      *********************************************************************  
-        pré-requis : cod est une matrice à cod1.length colonnes, rep est une matrice à 2 colonnes, 0 <= nbCoups < cod.length, 
-                    nbCoups < rep.length et les éléments de cod1 et de cod sont des entiers de 0 à nbCouleurs-1
+        pré-requis : cod est une matrice à cod1.length colonnes, rep est une matrice à 2 colonnes, 0 <= nbCoups < cod.length, nbCoups < rep.length et les éléments de cod1 et de cod sont des entiers de 0 à nbCouleurs-1
 	résultat : vrai ssi cod1 est compatible avec les nbCoups premières lignes de cod et de rep,
              c'est-à-dire que si cod1 était le code secret, les réponses aux nbCoups premières
             propositions de cod seraient les nbCoups premières réponses de rep resp.
    */
    public static boolean estCompat(int [] cod1, int [][] cod,int [][] rep, int nbCoups, int  nbCouleurs){
- 
+        //cod = new int[nbCoups][cod1.length];
+        //rep = new int[nbCoups][2];
+        
     }
 
     //___________________________________________________________________
@@ -385,31 +398,59 @@ public class MasterMindBase {
 	résultat : l'entier strictement positif saisi
     */
     public static int saisirEntierPositif(){
-	
- 
+        try(Scanner scan = new Scanner(System.in)){
+            int rep = scan.nextInt();
+            while(rep <= 0){
+                System.out.println("L'entier saisi n'est pas strictement positif");
+                rep = scan.nextInt();
+            }
+            return rep;
+        }
     }
 
     //___________________________________________________________________
     
     /** pré-requis : aucun
-	action : demande au joueur humain de saisir un entier pair strictement positif, 
-                 avec re-saisie éventuelle jusqu'à ce qu'elle soit correcte
+	action : demande au joueur humain de saisir un entier pair strictement positif, avec re-saisie éventuelle jusqu'à ce qu'elle soit correcte
 	résultat : l'entier pair strictement positif saisi
     */
     public static int saisirEntierPairPositif(){
-	
+        try(Scanner scan = new Scanner(System.in)){
+            int rep = scan.nextInt();
+            while(rep <= 0 && rep%2 != 0){
+                System.out.println("L'entier saisi n'est pas strictement positif ou pair");
+                rep = scan.nextInt();
+            }
+            return rep;
+        }	
     }
 
     //___________________________________________________________________
     
     /** pré-requis : aucun
-	action : demande au joueur humain de saisir le nombre de couleurs (stricement positif), 
-                 puis les noms de couleurs aux initiales différentes, 
-	         avec re-saisie éventuelle jusqu'à ce qu'elle soit correcte
+	action : demande au joueur humain de saisir le nombre de couleurs (stricement positif), puis les noms de couleurs aux initiales différentes, avec re-saisie éventuelle jusqu'à ce qu'elle soit correcte
 	résultat : le tableau des initiales des noms de couleurs saisis
     */
     public static char[] saisirCouleurs(){
-  
+        try(Scanner scan = new Scanner(System.in)){
+            System.out.println("Saisissez le nombre de couleurs voulues.");
+            int nbCoul = scan.nextInt();
+            char[] rep = new char[nbCoul];
+            System.out.println("Saisissez " + nbCoul + " couleurs.");
+            for(int c = 0; c < nbCoul; c++){
+                String coul = scan.nextLine();
+                char initiales = coul.charAt(0);
+                rep[c] = initiales;
+                for(int n = c; n > 0; n--){
+                    if(rep[n] == rep[c]){
+                        c -= 1;
+                        System.out.println("Il ne peut pas y avoir 2 couleurs avec la même initiale");
+                    }
+                }
+            }
+
+            return rep;
+        }
     }
 
     //___________________________________________________________________
