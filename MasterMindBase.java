@@ -259,8 +259,36 @@ public class MasterMindBase {
             - un nombre supérieur à nbEssaisMax, calculé à partir du dernier essai du joueur humain (cf. sujet), s'il n'a toujours pas trouvé au bout du nombre maximum d'essais 
             - sinon le nombre de codes proposés par le joueur humain          
     */
-    public static int mancheHumain(int lgCode, char[] tabCouleurs, int numManche, int nbEssaisMax){
-        a 
+      public static int mancheHumain(int lgCode, char[] tabCouleurs, int numManche, int nbEssaisMax){
+        System.out.println("Début de la "+numManche+"ème manche");
+        int nbCodesProposes=0;
+        int[] code=codeAleat(lgCode, tabCouleurs.length);
+        String codeProp;
+        int[] resultats=new int[2];
+        while(resultats[0]!=code.length && nbCodesProposes<=nbEssaisMax){
+            System.out.println("Nombres d'essaies restant : "+(nbEssaisMax-nbCodesProposes));
+            System.out.print("Couleurs disponibles : ");
+            for(int i=0;i<tabCouleurs.length;i++){
+                System.out.print(tabCouleurs[i] +", ");
+            }
+            System.out.println();
+            System.out.println("Proposez un code");
+            codeProp=Ut.saisirChaine();
+            while(!codeCorrect(codeProp, lgCode, tabCouleurs) || codeProp.length()!=code.length){
+                System.out.println("Code incorrect, ressaisir un nouveau code");
+                codeProp=Ut.saisirChaine();
+            }
+            resultats=nbBienMalPlaces(code, motVersEntiers(codeProp, tabCouleurs), tabCouleurs.length);
+            System.out.println("Il y a  "+resultats[0]+" bien placés et "+resultats[1]+" de la bonne couleur mais mal placés.");
+            nbCodesProposes++;
+        }
+        if(nbCodesProposes<nbEssaisMax){
+            System.out.println("Vous avez trouvé le code en "+nbCodesProposes);
+            return nbCodesProposes;
+        }
+        else{
+            
+        }
     }
 
     //____________________________________________________________
@@ -334,7 +362,7 @@ public class MasterMindBase {
      sinon met dans cod1 le code ne contenant que des "0" et retourne faux
     */
     public static boolean passeCodeSuivantLexico(int[] cod1, int  nbCouleurs){
-        a
+        
     }
 
     //___________________________________________________________________
