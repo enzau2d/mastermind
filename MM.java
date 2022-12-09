@@ -246,7 +246,7 @@ public class MM {
         int[] tab1 = tabFrequence(cod1, nbCouleurs);
         int[] tab2 = tabFrequence(cod2, nbCouleurs);
         int res = 0;
-        for (int n = 0; n < tab1.length; n++) //  "<=" pour que TestAutoPublic marche
+        for (int n = 0; n < tab1.length; n++)
         { 
             if (tab1[n] <= tab2[n]) {
                 res += tab1[n];
