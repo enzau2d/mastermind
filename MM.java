@@ -593,7 +593,6 @@ public class MM {
      */
     //
     public static void main(String[] args) {
-        /*
         Ut.clearConsole();
         int numManche = 0;
         int pointOrdinateur = 0;
@@ -629,8 +628,5 @@ public class MM {
         else{
             System.out.println("Match nul!");
         }
-        */
-        char[] tabCouleurs = {'R', 'V', 'B', 'J', 'O', 'N'};
-        mancheOrdinateur(4, tabCouleurs, 2, 15);
     }
 }
