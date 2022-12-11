@@ -1,5 +1,4 @@
 import java.util.*;
-
 public class MM {
     // .........................................................................
     // OUTILS DE BASE
@@ -246,7 +245,7 @@ public class MM {
         int[] tab1 = tabFrequence(cod1, nbCouleurs);
         int[] tab2 = tabFrequence(cod2, nbCouleurs);
         int res = 0;
-        for (int n = 0; n < tab1.length; n++)
+        for (int n = 0; n < tab1.length; n++) //  "<=" pour que TestAutoPublic marche
         { 
             if (tab1[n] <= tab2[n]) {
                 res += tab1[n];
@@ -299,7 +298,7 @@ public class MM {
         int nbCoups = 0;
         String codeProp;
         while (res[0] != code.length && nbCoups <= nbEssaisMax) {
-            System.out.println("Manche " + numManche);
+            System.out.println("Manche " + (numManche+1));
             System.out.println("Coups : " + (nbCoups+1) + " / " + nbEssaisMax);
             System.out.print("Couleurs disponibles : ");
             for (int i = 0; i < tabCouleurs.length; i++) {
@@ -486,7 +485,7 @@ public class MM {
         int nbCouleurs = tabCouleurs.length;
         int nbCoups = 0;
         while(nbCoups <= nbEssaisMax) {
-            System.out.println("Manche " + numManche);
+            System.out.println("Manche " + (numManche+1));
             System.out.println("Coups : " + (nbCoups+1) + " / " + nbEssaisMax);
             System.out.println("La machine propose le code suivant:");
             for (int i : cod1) {
@@ -496,7 +495,7 @@ public class MM {
             rep[nbCoups] = reponseHumain(lgCode);
             cod[nbCoups] = copieTab(cod1);
             if (rep[nbCoups][0] == lgCode) {
-                System.out.println("\nLa machine a gagné en " + nbCoups + " coups");
+                System.out.println("\nL'ordinateur a gagné en " + (nbCoups+1) + " coups");
                 return nbCoups;
             }
             nbCoups++;
@@ -593,6 +592,7 @@ public class MM {
      */
     //
     public static void main(String[] args) {
+        
         Ut.clearConsole();
         int numManche = 0;
         int pointOrdinateur = 0;
@@ -609,9 +609,12 @@ public class MM {
         System.out.println("Saisissez le nombre d'essais maximum.");
         int nbEssaisMax = saisirEntierPositif();
         Ut.clearConsole();
-        while(numManche <= nbManches){
+        while(numManche < nbManches){
             if(numManche%2 == 0){
                 pointHumain += mancheOrdinateur(lgCode, tabCouleurs, numManche, nbEssaisMax);
+                numManche++;
+            }
+            else{
                 pointOrdinateur += mancheHumain(lgCode, tabCouleurs, numManche, nbEssaisMax);
                 numManche++;
             }
@@ -628,5 +631,9 @@ public class MM {
         else{
             System.out.println("Match nul!");
         }
+        /* 
+        char[] tabCouleurs = {'R', 'V', 'B', 'J', 'O', 'N'};
+        mancheOrdinateur(4, tabCouleurs, 2, 15);
+        */
     }
 }
